@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
-	"net"
 	"os"
 	"syscall"
 	"time"
@@ -37,7 +36,7 @@ func connect() (*ssh.Client, error) {
 		User:            username,
 		Auth:            []ssh.AuthMethod{ssh.Password(string(password))},
 		Timeout:         5 * time.Second,
-		HostKeyCallback: func(hostname string, remote net.Addr, key ssh.PublicKey) error { return nil },
+		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}
 
 	return ssh.Dial("tcp", hostport, config)
